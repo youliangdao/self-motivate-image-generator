@@ -1,0 +1,9 @@
+node_modules
+.next
+.plop
+.editorconfig
+.gitignore
+.eslintignore
+.prettierignore
+*-lock.yaml
+*.log*

@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    // Linting / Formatting
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+
+    // Spell checker
+    "streetsidesoftware.code-spell-checker",
+
+    // Testing
+    "orta.vscode-jest",
+
+    // PR management / Reviewing
+    "github.vscode-pull-request-github",
+
+    // MDX Authoring
+    "unifiedjs.vscode-mdx",
+
+    // Tailwind
+    "bradlc.vscode-tailwindcss"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  // Formatting using Prettier by default for all languages
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Formatting using Prettier for JavaScript, overrides VSCode default.
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  // Linting using ESLint.
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  // Disable Jest autoRun as otherwise it will start running all tests the first time.
+  "jest.autoRun": "off",
+  "jest.jestCommandLine": "pnpm test --",
+
+  // Disable TypeScript surveys.
+  "typescript.surveys.enabled": false,
+
+  "cSpell.words": [
+    "Entrypoints",
+    "nextjs",
+    "opentelemetry",
+    "pnpm",
+    "tailwindcss",
+    "Threadsafe"
+  ]
+}
