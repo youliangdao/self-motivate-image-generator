@@ -11,7 +11,18 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      // Mantineのbreak-pointに合わせています
+      screens: {
+        lg: '1200px',
+        md: '992px',
+        sm: '768px',
+        xl: '1400px',
+        xs: '576px',
+      },
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 }
