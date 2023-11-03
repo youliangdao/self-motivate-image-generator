@@ -1,0 +1,1 @@
+export { HeroLeftBullets } from './HeroLeftBullets'
