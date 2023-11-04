@@ -1,8 +1,12 @@
 import './globals.css'
 import '@mantine/core/styles.css'
 import '@mantine/carousel/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/nprogress/styles.css'
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
+import { NavigationProgress } from '@mantine/nprogress'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -24,7 +28,11 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider>
+          <NavigationProgress size={5} />
+          <Notifications />
+          {children}
+        </MantineProvider>
       </body>
     </html>
   )

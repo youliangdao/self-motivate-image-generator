@@ -1,0 +1,12 @@
+.card {
+  position: relative;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 100ms ease;
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.02);
+  }
+}
