@@ -1,4 +1,9 @@
+'use client'
+
 import { Button, Container, Overlay, Text, Title } from '@mantine/core'
+import { nprogress } from '@mantine/nprogress'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import {
   CardsCarousel,
@@ -11,6 +16,11 @@ import {
 import classes from './home.module.css'
 
 export default function Home() {
+  const router = useRouter()
+
+  useEffect(() => {
+    nprogress.reset()
+  }, [])
   return (
     <>
       <Header />
@@ -29,19 +39,27 @@ export default function Home() {
 
             <Container size={640}>
               <Text size="lg" className={classes.description}>
-                何でもない予定をそれっぽく見せれるアプリ「OtonaryDay」
+                何でもない予定をそれっぽく見せれるアプリ「セミLife」
               </Text>
             </Container>
 
             <div className={classes.controls}>
-              <Button className={classes.control} variant="white" size="lg">
+              <Button
+                className={classes.control}
+                onClick={() => {
+                  nprogress.set(20)
+                  router.push('/on-boarding/select-type')
+                }}
+                variant="white"
+                size="lg"
+              >
                 今すぐ使ってみる
               </Button>
             </div>
           </div>
         </div>
         <section>
-          <div className="xs:px-10 relative md:px-20">
+          <div className="relative xs:px-10 md:px-20">
             <Title className={classes.contentTitle}>
               テンプレートを使ってアイキャッチ画像を作成しましょう
             </Title>
