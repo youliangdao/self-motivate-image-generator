@@ -1,5 +1,6 @@
 export * from './CardCarousel'
 export * from './Footer'
+export * from './Form'
 export * from './Header'
 export * from './HeroLeftBullets'
 export * from './HeroRightBullets'
