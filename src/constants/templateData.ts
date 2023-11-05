@@ -4,7 +4,6 @@ import template1 from '/public/template1.svg'
 import template2 from '/public/template2.svg'
 import template3 from '/public/template3.svg'
 import template4 from '/public/template4.svg'
-import template5 from '/public/template5.svg'
 import template6 from '/public/template6.svg'
 import { Template } from '@/app/on-boarding/pick-template/page'
 
@@ -35,12 +34,6 @@ export const initialTemplateData: Template = [
   },
   {
     id: 5,
-    src: template5.src,
-    alt: 'Canvas',
-    isSelected: false,
-  },
-  {
-    id: 6,
     src: template6.src,
     alt: 'BlobScene',
     isSelected: false,
