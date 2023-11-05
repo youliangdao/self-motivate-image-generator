@@ -1,54 +1,71 @@
-import { Box, FileInput, Space, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+'use client'
 
-export function Form() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false,
-    },
+import { Box, Button, FileInput, Group, Space } from '@mantine/core'
+import { nprogress } from '@mantine/nprogress'
+import { useRouter } from 'next/navigation'
+import { Form as $Form, useFormContext } from 'react-hook-form'
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    },
-  })
+import { DateInput, TextInput, TimeInput } from '@/components'
+
+import { FormType } from './schema'
+
+export function Form({ handleClick }: { handleClick: () => void }) {
+  const router = useRouter()
+
+  const {
+    control,
+    formState: { isValid },
+  } = useFormContext<FormType>()
 
   return (
-    <Box maw={600} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+    <$Form control={control}>
+      <Box maw={600} mx="auto">
         {/** 15文字以内 */}
         <TextInput
+          name="title"
+          control={control}
           withAsterisk
           size="lg"
           label="タイトル"
-          placeholder="サウナに行く！"
-          {...form.getInputProps('email')}
         />
         <Space h={20} />
         {/** 30文字以内 */}
         <TextInput
+          name="description"
+          control={control}
           size="lg"
           label="補足説明"
-          placeholder="たったこれだけで心身が生き返る！"
-          {...form.getInputProps('email')}
         />
         <Space h={20} />
-        <TextInput
-          withAsterisk
+        <DateInput
+          name="date"
+          control={control}
           size="lg"
+          withAsterisk
           label="日付"
-          placeholder="11/5（日）"
-          {...form.getInputProps('email')}
         />
         <Space h={20} />
-
-        <TextInput
-          withAsterisk
-          size="lg"
-          label="時間帯"
-          placeholder="11:00~13:00"
-          {...form.getInputProps('email')}
-        />
+        <Group justify="flex-start" align="center">
+          <TimeInput
+            name="startTime"
+            control={control}
+            withAsterisk
+            size="lg"
+            label="開始時間"
+            placeholder="11:00"
+            className="flex-1"
+          />
+          <span className="mt-6">〜</span>
+          <TimeInput
+            name="endTime"
+            control={control}
+            withAsterisk
+            size="lg"
+            label="終了時間"
+            placeholder="13:00"
+            className="flex-1"
+          />
+        </Group>
         <Space h={20} />
 
         <FileInput
@@ -57,7 +74,22 @@ export function Form() {
           description="アップロードしない場合は、デフォルトの画像が表示されます"
           placeholder="Upload files"
         />
-      </form>
-    </Box>
+      </Box>
+      <Group justify="center" className="mt-10">
+        <Button
+          size="lg"
+          variant="default"
+          onClick={() => {
+            nprogress.set(40)
+            router.push('/on-boarding/pick-template')
+          }}
+        >
+          戻る
+        </Button>
+        <Button size="lg" onClick={handleClick} disabled={!isValid}>
+          次へ
+        </Button>
+      </Group>
+    </$Form>
   )
 }

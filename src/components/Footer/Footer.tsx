@@ -7,6 +7,7 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
 } from '@tabler/icons-react'
+import Link from 'next/link'
 
 import classes from './FooterSocial.module.css'
 
@@ -14,7 +15,9 @@ export function FooterSocial() {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
-        <MantineLogo size={28} />
+        <Link href="/">
+          <MantineLogo size={28} />
+        </Link>
         <Group
           gap={0}
           className={classes.links}

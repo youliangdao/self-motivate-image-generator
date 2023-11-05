@@ -1,33 +1,49 @@
 'use client'
 
-import {
-  Button,
-  Group,
-  Image,
-  SimpleGrid,
-  Space,
-  Text,
-  Title,
-} from '@mantine/core'
-import { useWindowScroll } from '@mantine/hooks'
+import { Button, Group, SimpleGrid, Space, Text, Title } from '@mantine/core'
+import { useLocalStorage } from '@mantine/hooks'
 import { nprogress } from '@mantine/nprogress'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import templateCanvaSetsuzei from '/public/template_canva_setsuzei.svg'
-import templateRed from '/public/template_red.svg'
-import templateRunteq from '/public/template_runteq.svg'
-import templateRunteqBlue from '/public/template_runteq_blue.svg'
-import templateYellow from '/public/template_yellow.svg'
-import template1 from '/public/template1.svg'
+import { initialTemplateData } from '@/constants/templateData'
+
+import { TemplateCard } from './_components/TemplateCard'
+
+export type Template = {
+  id: number
+  src: string
+  alt: string
+  isSelected: boolean
+}[]
 
 export default function PickTemplate() {
-  const [scroll, scrollTo] = useWindowScroll()
-
   const router = useRouter()
+  const [templateLocalData, setTemplateLocalData] = useLocalStorage<number>({
+    key: 'templateId',
+    defaultValue: 0,
+  })
+  const [templateData, setTemplateData] =
+    useState<Template>(initialTemplateData)
+
   useEffect(() => {
     nprogress.set(40)
   }, [])
+
+  // ToDo: ここのuseEffectは消す。keyを変えて無理やりアンマウント→再マウントさせる
+  useEffect(() => {
+    setTemplateData((prev) => {
+      return prev.map((templateData) => {
+        if (templateData.id === templateLocalData) {
+          return {
+            ...templateData,
+            isSelected: true,
+          }
+        }
+        return { ...templateData, isSelected: false }
+      })
+    })
+  }, [templateLocalData])
 
   return (
     <>
@@ -37,53 +53,29 @@ export default function PickTemplate() {
         <Title>テンプレートを選択してください</Title>
         <Space h="md" />
         <Text c="dimmed">以下からお好きなテンプレートを選択しましょう</Text>
-        <Text c="dimmed">
-          ※画像部分はStep1で選択したカテゴリに応じて変更されます
-        </Text>
       </div>
-      <SimpleGrid cols={2}>
-        <Image
-          src={template1.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
-        <Image
-          src={templateRunteq.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
-        <Image
-          src={templateRed.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
-        <Image
-          src={templateRunteqBlue.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
-        <Image
-          src={templateCanvaSetsuzei.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
-        <Image
-          src={templateYellow.src}
-          alt="Card"
-          width={400}
-          fit="contain"
-          radius="md"
-        />
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        {templateData.map((template) => (
+          <TemplateCard
+            key={template.id}
+            image={template.src}
+            isSelected={template.isSelected}
+            onClick={() => {
+              const newTemplateData = templateData.map((templateData) => {
+                if (templateData.id === template.id) {
+                  setTemplateLocalData(template.id)
+
+                  return {
+                    ...templateData,
+                    isSelected: true,
+                  }
+                }
+                return { ...templateData, isSelected: false }
+              })
+              setTemplateData(newTemplateData)
+            }}
+          />
+        ))}
       </SimpleGrid>
       <Group justify="center" className="mt-10">
         <Button
@@ -100,7 +92,6 @@ export default function PickTemplate() {
           size="lg"
           onClick={() => {
             nprogress.set(60)
-            scrollTo({ y: 0 })
             router.push('/on-boarding/enter-name')
           }}
         >

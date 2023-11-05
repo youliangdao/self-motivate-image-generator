@@ -1,22 +1,35 @@
+'use client'
+
 import { Image, Space, Text, Title } from '@mantine/core'
+import { useLocalStorage } from '@mantine/hooks'
+
+import { Genre } from '@/app/on-boarding/select-type/page'
+import { FormType } from '@/components/Form/schema'
 
 import Preview from './_components/Preview'
 
-// async function getOgImage() {
-//   const res = await fetch('/api/og-image', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({
-//       title: 'プレビュー画面で、アイキャッチ画像を確認しましょう',
-//       description:
-//         '修正したい箇所があれば、前のステップに戻って修正してください',
-//     }),
-//   })
-//   const blob = await res.blob()
-//   return URL.createObjectURL(blob)
-// }
-
 export default function Page() {
+  const [genreLocalData, setGenreLocalData] = useLocalStorage<Genre>({
+    key: 'genre',
+    defaultValue: '',
+  })
+
+  const [templateLocalData, setTemplateLocalData] = useLocalStorage<number>({
+    key: 'templateId',
+    defaultValue: 0,
+  })
+
+  const [formLocalData, setFormLocalData] = useLocalStorage<FormType>({
+    key: 'form',
+    defaultValue: {
+      title: '',
+      date: null,
+      description: '',
+      startTime: '',
+      endTime: '',
+    },
+  })
+
   return (
     <Preview>
       <div className="pb-10 text-center">
@@ -30,7 +43,12 @@ export default function Page() {
           修正したい箇所があれば、前のステップに戻って修正しましょう
         </Text>
       </div>
-      <Image src="http://localhost:3000/api/og" alt="preview" />
+      {genreLocalData && templateLocalData && formLocalData && (
+        <Image
+          src={`http://localhost:3000/api/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+          alt="preview"
+        />
+      )}
     </Preview>
   )
 }

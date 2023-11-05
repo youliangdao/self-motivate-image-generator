@@ -1,11 +1,11 @@
 'use client'
 
-import { Button, Center, Image, Space, Stack, Text, Title } from '@mantine/core'
+import { Button, Center, Image, Stack, Title } from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import Confetti from 'react-confetti'
 
-import image from '/public/17015_color.svg'
+import image from '/public/seminar.png'
 
 export default function Complete() {
   const { width, height } = useViewportSize()
@@ -15,14 +15,12 @@ export default function Complete() {
 
       <div className="pb-10 text-center">
         <Title>アイキャッチ画像が完成しました 🎉</Title>
-        <Space h={50} />
         <Center>
-          <Image src={image.src} height={200} fit="contain" alt="happy" />
+          <Image src={image.src} height={400} fit="contain" alt="happy" />
         </Center>
-        <Space h={50} />
-        <Text c="dimmed" size="lg">
+        <Title size="h2">
           以下のボタンからX（旧Twitter）などに投稿してみましょう！
-        </Text>
+        </Title>
       </div>
       <Stack align="center">
         <Button size="lg">ツイートする</Button>

@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ImageResponse } from 'next/server'
+
+import { initialGenreData } from '@/constants/initialGenreData'
 // App router includes @vercel/og.
 // No need to install it.
 
@@ -11,16 +15,50 @@ const font = fetch(
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url)
     const fontData = await font
+    const { searchParams } = new URL(request.url)
     // ?title=<title>
     const hasTitle = searchParams.has('title')
-    const title = hasTitle
-      ? searchParams.get('title')?.slice(0, 100)
-      : '確認しましょう'
+    const title = hasTitle ? searchParams.get('title')?.slice(0, 100) : ''
+    // ?description=<description>
+    const hasDescription = searchParams.has('description')
+    const description = hasDescription
+      ? searchParams.get('description')?.slice(0, 100)
+      : ''
+    // ?date=<date>
+    const hasDate = searchParams.has('description')
+    const date = hasDate ? searchParams.get('date')?.slice(0, 100) : ''
+    const month = new Date(date ?? '').getMonth() + 1
+    const day = new Date(date ?? '').getDate()
+    const dayOfWeek = new Date(date ?? '').getDay()
+    const dayOfWeekStr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][
+      dayOfWeek
+    ]
+    // ?startTime=<startTime>
+    const hasStartTime = searchParams.has('startTime')
+    const startTime = hasStartTime
+      ? searchParams.get('startTime')?.slice(0, 100)
+      : ''
+    // ?endTime=<endTime>
+    const hasEndTime = searchParams.has('endTime')
+    const endTime = hasEndTime ? searchParams.get('endTime')?.slice(0, 100) : ''
+
+    // ?genre=<genre>
+    const hasGenre = searchParams.has('genre')
+    const genre = hasGenre ? searchParams.get('genre')?.slice(0, 100) : ''
+
+    const genreSrc = initialGenreData.find((data) => data.genre === genre)
+      ?.ogpImage
+
+    // ?templateId=<templateId>
+    const hasTemplateId = searchParams.has('templateId')
+    const templateId = hasTemplateId
+      ? searchParams.get('templateId')?.slice(0, 100)
+      : ''
 
     return new ImageResponse(
-      (
+      templateId === '0' || templateId === '1' ? (
+        // いつものテンプレート
         <div
           style={{
             backgroundSize: '100% 100%',
@@ -37,42 +75,107 @@ export async function GET(request: Request) {
             justifyContent: 'center',
             flexDirection: 'column',
             flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
           }}
         >
           <div tw="flex max-h-full px-5">
             <div tw="flex flex-col md:flex-row w-full py-12 px-4 md:items-center justify-between">
               <div tw="flex flex-col text-3xl font-bold mt-0 max-w-7/12">
                 <span tw="text-white text-3xl">緊急開催！！</span>
-                <p
-                  tw="text-blue-900 bg-white text-4xl mt-8 mb-3 w-3/4 text-left"
-                  style={{
-                    fontWeight: 900,
-                  }}
-                >
-                  絶対に負けられない戦いがそこにはある。
+                <p tw="bg-white text-4xl mt-8 mb-3 w-4/5 text-left">
+                  {description}
                 </p>
                 <span tw="text-blue-900 bg-white text-7xl max-w-full text-left leading-tight">
-                  渋谷ウィンズ決戦🔥
+                  {title}
                 </span>
                 <div tw="flex text-7xl mt-5 text-white w-full items-center">
                   <div tw="flex flex-col mt-10">
                     <div tw="flex ml-10 text-7xl">
-                      11 / 5<span tw="text-4xl mt-8">(Sun)</span>
+                      {`${month}.${day}`}
+                      <span tw="text-4xl mt-8">{`(${dayOfWeekStr})`}</span>
                     </div>
                   </div>
                   <div tw="flex flex-col text-5xl ml-15 mt-12">
-                    <span tw="text-4xl">15:00 ~ 16:00</span>
+                    <span tw="text-4xl">{`${startTime} 〜 ${endTime}`}</span>
                     <span tw="text-3xl mt-3">※途中参加・退出OK</span>
                   </div>
                 </div>
               </div>
+              <div tw="flex flex-col items-center bg-opacity-50">
+                <img
+                  src={genreSrc}
+                  alt="画像"
+                  width="400"
+                  height="400"
+                  fit="content"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : templateId == '2' ? (
+        // RUNTEQコミュニティイベントのテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: '#FC7400',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+          tw="p-6"
+        >
+          <div tw="flex max-h-full bg-white h-full">
+            <div tw="flex flex-col md:flex-row w-full px-15 py-6 justify-between">
+              <div tw="flex flex-col text-3xl font-bold mt-0 max-w-2/3">
+                <div tw="flex flex-col max-w-3/4">
+                  <span
+                    tw="text-3xl mt-8 text-left text-white"
+                    style={{
+                      backgroundColor: '#FC7400',
+                    }}
+                  >
+                    {description}
+                  </span>
+                </div>
+
+                <span tw="text-7xl mt-10 max-w-full text-left leading-tight">
+                  {title}
+                </span>
+                <div tw="flex text-7xl mt-5 w-full items-center">
+                  <div tw="flex flex-col mt-10">
+                    <div tw="flex">
+                      <span tw="text-7xl">{`${month}.${day}`}</span>
+                      <span tw="text-4xl mt-8">{`(${dayOfWeekStr})`}</span>
+                    </div>
+                    <span tw="text-4xl">{`${startTime} 〜 ${endTime}`}</span>
+                  </div>
+                  <div tw="flex flex-col text-5xl ml-4 mt-12">
+                    <span
+                      tw="text-4xl mt-3"
+                      style={{
+                        color: '#FC7400',
+                      }}
+                    >
+                      ※途中参加・退出OK
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div tw="flex">
-                <div tw="flex flex-col items-center">
+                <div tw="flex flex-col mt-10">
                   <img
-                    src="https://youliangdao.s3.ap-northeast-1.amazonaws.com/11182_color.png"
+                    src={genreSrc}
                     alt=""
                     width="400"
-                    height="300"
+                    height="400"
                     fit="content"
                   />
                 </div>
@@ -80,6 +183,242 @@ export async function GET(request: Request) {
             </div>
           </div>
         </div>
+      ) : templateId == '3' ? (
+        // 赤いテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundImage: `url(${`data:image/svg+xml,${encodeURIComponent(
+              '<svg id="visual" viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><path d="M0 58L109 58L109 96L218 96L218 45L327 45L327 58L436 58L436 83L545 83L545 114L655 114L655 77L764 77L764 133L873 133L873 64L982 64L982 70L1091 70L1091 45L1200 45L1200 58L1200 0L1200 0L1091 0L1091 0L982 0L982 0L873 0L873 0L764 0L764 0L655 0L655 0L545 0L545 0L436 0L436 0L327 0L327 0L218 0L218 0L109 0L109 0L0 0Z" fill="#fa7268"></path><path d="M0 209L109 209L109 171L218 171L218 108L327 108L327 184L436 184L436 171L545 171L545 240L655 240L655 133L764 133L764 278L873 278L873 140L982 140L982 133L1091 133L1091 146L1200 146L1200 159L1200 56L1200 43L1091 43L1091 68L982 68L982 62L873 62L873 131L764 131L764 75L655 75L655 112L545 112L545 81L436 81L436 56L327 56L327 43L218 43L218 94L109 94L109 56L0 56Z" fill="#ea5e66"></path><path d="M0 392L109 392L109 486L218 486L218 366L327 366L327 398L436 398L436 436L545 436L545 373L655 373L655 348L764 348L764 492L873 492L873 392L982 392L982 335L1091 335L1091 322L1200 322L1200 322L1200 157L1200 144L1091 144L1091 131L982 131L982 138L873 138L873 276L764 276L764 131L655 131L655 238L545 238L545 169L436 169L436 182L327 182L327 106L218 106L218 169L109 169L109 207L0 207Z" fill="#d84a64"></path><path d="M0 524L109 524L109 587L218 587L218 543L327 543L327 574L436 574L436 568L545 568L545 549L655 549L655 543L764 543L764 574L873 574L873 562L982 562L982 562L1091 562L1091 555L1200 555L1200 555L1200 320L1200 320L1091 320L1091 333L982 333L982 390L873 390L873 490L764 490L764 346L655 346L655 371L545 371L545 434L436 434L436 396L327 396L327 364L218 364L218 484L109 484L109 390L0 390Z" fill="#c53762"></path><path d="M0 631L109 631L109 631L218 631L218 631L327 631L327 631L436 631L436 631L545 631L545 631L655 631L655 631L764 631L764 631L873 631L873 631L982 631L982 631L1091 631L1091 631L1200 631L1200 631L1200 553L1200 553L1091 553L1091 560L982 560L982 560L873 560L873 572L764 572L764 541L655 541L655 547L545 547L545 566L436 566L436 572L327 572L327 541L218 541L218 585L109 585L109 522L0 522Z" fill="#b0235f"></path></svg>',
+            )}`})`,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+        >
+          <div tw="flex max-h-full px-5">
+            <div tw="flex flex-col md:flex-row w-full py-12 px-4 md:items-center justify-between">
+              <div tw="flex flex-col text-3xl font-bold mt-0 max-w-7/12">
+                <div
+                  tw="py-3 text-white items-center text-4xl bg-black w-full flex flex-col max-w-2/3"
+                  style={{
+                    transform: 'skew(-20deg)',
+                  }}
+                >
+                  <span>待望の開催！！！</span>
+                </div>
+                <p tw="bg-white text-3xl mt-8 mb-3 w-4/5 text-left">
+                  {description}
+                </p>
+                <span tw="bg-white text-6xl max-w-full text-left leading-tight">
+                  {title}
+                </span>
+                <div tw="flex text-white text-5xl w-full items-center mt-10">
+                  <div tw="flex flex-col">
+                    <div tw="flex ml-10">
+                      {`${month} / ${day}`}
+                      <span tw="text-3xl mt-3">{`(${dayOfWeekStr})`}</span>
+                    </div>
+                  </div>
+                  <div tw="flex flex-col ml-10">
+                    <span tw="">{`${startTime} 〜 ${endTime}`}</span>
+                  </div>
+                </div>
+                <span tw="text-white text-2xl mt-2">
+                  ※当日の状況により変更となる可能性があります
+                </span>
+              </div>
+              <div tw="flex flex-col">
+                <div tw="flex flex-col">
+                  <img
+                    src={genreSrc}
+                    alt="画像"
+                    width="400"
+                    height="400"
+                    fit="content"
+                  />
+                </div>
+                <div tw="flex flex-col border border-white p-3 ml-50 mt-10 items-center">
+                  <span tw="text-white text-4xl">完全非公開</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : templateId === '4' ? (
+        // RUNTEQ技術イベントのテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+          tw="py-6 px-8 bg-indigo-500"
+        >
+          <div tw="flex max-h-full bg-white h-full">
+            <div tw="flex flex-col md:flex-row w-full px-15 py-6 justify-between">
+              <div tw="flex flex-col text-3xl font-bold mt-0 max-w-2/3">
+                <div tw="flex flex-col max-w-3/4">
+                  <span tw="text-3xl mt-8 text-left text-white leading-normal bg-indigo-500">
+                    {description}
+                  </span>
+                </div>
+
+                <span tw="text-7xl mt-10 max-w-full text-left leading-tight">
+                  {title}
+                </span>
+                <div tw="flex text-7xl mt-5 w-full items-center">
+                  <div tw="flex flex-col mt-10">
+                    <div tw="flex">
+                      <span tw="text-7xl">{`${month}.${day}`}</span>
+                      <span tw="text-4xl mt-6">({`${dayOfWeekStr}`})</span>
+                    </div>
+                    <span tw="text-4xl">{`${startTime} ~ ${endTime}`}</span>
+                  </div>
+                  <div tw="flex flex-col text-5xl ml-4 mt-12">
+                    <span tw="text-4xl mt-3 text-indigo-500">
+                      ※途中参加・退出OK
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div tw="flex">
+                <div tw="flex flex-col mt-10">
+                  <img
+                    src={genreSrc}
+                    alt=""
+                    width="400"
+                    height="400"
+                    fit="content"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : templateId === '5' ? (
+        // オフライン開催のテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundImage: `url(${`data:image/svg+xml,${encodeURIComponent(
+              '<svg id="visual" viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><defs><filter id="blur1" x="-10%" y="-10%" width="120%" height="120%"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur stdDeviation="201" result="effect1_foregroundBlur"></feGaussianBlur></filter></defs><rect width="1200" height="630" fill="#6600FF"></rect><g filter="url(#blur1)"><circle cx="111" cy="236" fill="#00CC99" r="447"></circle><circle cx="1150" cy="596" fill="#6600FF" r="447"></circle><circle cx="1104" cy="241" fill="#00CC99" r="447"></circle><circle cx="332" cy="621" fill="#00CC99" r="447"></circle><circle cx="1113" cy="17" fill="#6600FF" r="447"></circle><circle cx="305" cy="358" fill="#00CC99" r="447"></circle></g></svg>',
+            )}`})`,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+        >
+          <div tw="flex flex-col px-4 items-center">
+            <div tw="flex flex-col text-3xl font-bold bg-white items-center px-15 py-10">
+              <span tw="text-3xl bg-gray-800 text-white font-bold p-3">
+                オフライン開催！！
+              </span>
+              <div tw="flex flex-col items-center mt-5">
+                <div tw="text-4xl border-black border-t-2 py-3 border-b-2 max-w-full w-full mb-2">
+                  {description}
+                </div>
+                <span tw="text-6xl leading-tight mt-5">{title}</span>
+              </div>
+              <span tw="text-3xl leading-tight font-normal bg-indigo-200 mt-5">
+                当日のご参加お待ちしています♪
+              </span>
+            </div>
+            <div tw="flex w-full items-center font-bold mt-5">
+              <div tw="flex ml-10 text-6xl">
+                {' '}
+                {`${month} / ${day}`} {`(${dayOfWeekStr})`}
+              </div>
+              <div tw="flex flex-col text-5xl ml-10">
+                <span tw="text-6xl">{`${startTime} ~ ${endTime}`}</span>
+              </div>
+            </div>
+            <span tw="text-3xl mt-5">
+              ※当日の状況により変更となる可能性があります
+            </span>
+          </div>
+        </div>
+      ) : templateId === '6' ? (
+        // 黄色いテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundImage: `url(${`data:image/svg+xml,${encodeURIComponent(
+              '<svg id="visual" viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="1200" height="630" fill="#001220"></rect><defs><linearGradient id="grad1_0" x1="47.5%" y1="0%" x2="100%" y2="100%"><stop offset="11.904761904761909%" stop-color="#001220" stop-opacity="1"></stop><stop offset="88.09523809523809%" stop-color="#001220" stop-opacity="1"></stop></linearGradient></defs><defs><linearGradient id="grad2_0" x1="0%" y1="0%" x2="52.5%" y2="100%"><stop offset="11.904761904761909%" stop-color="#001220" stop-opacity="1"></stop><stop offset="88.09523809523809%" stop-color="#001220" stop-opacity="1"></stop></linearGradient></defs><g transform="translate(1200, 0)"><path d="M0 567C-78.9 557 -157.8 546.9 -208.9 504.4C-260.1 461.9 -283.6 386.9 -338.7 338.7C-393.8 290.5 -480.5 269 -523.8 217C-567.2 165 -567.1 82.5 -567 0L0 0Z" fill="#FBAE3C"></path></g><g transform="translate(0, 630)"><path d="M0 -567C66.6 -540.5 133.1 -514 203.2 -490.6C273.3 -467.1 346.9 -446.8 400.9 -400.9C454.9 -355.1 489.3 -283.8 513.7 -212.8C538.1 -141.7 552.5 -70.9 567 0L0 0Z" fill="#FBAE3C"></path></g></svg>',
+            )}`})`,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+        >
+          <div tw="flex max-h-full px-5">
+            <div tw="flex flex-col flex-row w-full py-12 px-4 items-center justify-between">
+              <div tw="flex flex-col items-center">
+                <img
+                  src={genreSrc}
+                  alt="画像"
+                  width="400"
+                  height="400"
+                  fit="content"
+                />
+              </div>
+              <div tw="flex flex-col text-3xl font-bold mt-0 max-w-7/12 items-center">
+                <span tw="text-3xl bg-white max-w-2/5 p-3">オフライン開催</span>
+                <span tw="text-white text-7xl max-w-full leading-tight">
+                  {title}
+                </span>
+                <p tw="text-white text-4xl mt-8 mb-3">{description}</p>
+              </div>
+            </div>
+          </div>
+          <div tw="flex text-7xl font-bold text-white w-full items-center bg-gray-800 py-8">
+            <div tw="flex flex-col">
+              <div tw="flex ml-10 text-7xl">
+                {`${month}.${day}`}
+                <span tw="text-4xl mt-8">{`(${dayOfWeekStr})`}</span>
+              </div>
+            </div>
+            <span tw="text-5xl ml-15">{`${startTime} ~ ${endTime}`}</span>
+            <span tw="ml-20">｜</span>
+            <div tw="flex flex-col ml-10">
+              <span tw="text-5xl">参加費無料</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div></div>
       ),
       {
         width: 1200,
