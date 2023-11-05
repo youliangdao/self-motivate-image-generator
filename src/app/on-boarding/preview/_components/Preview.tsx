@@ -1,13 +1,11 @@
 'use client'
 
 import { Button, Group } from '@mantine/core'
-import { useWindowScroll } from '@mantine/hooks'
 import { nprogress } from '@mantine/nprogress'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function Preview({ children }: { children: React.ReactNode }) {
-  const [scroll, scrollTo] = useWindowScroll()
   const router = useRouter()
   useEffect(() => {
     nprogress.set(80)
@@ -20,7 +18,7 @@ export default function Preview({ children }: { children: React.ReactNode }) {
           size="lg"
           variant="default"
           onClick={() => {
-            nprogress.set(50)
+            nprogress.set(60)
             router.push('/on-boarding/enter-name')
           }}
         >
@@ -30,7 +28,6 @@ export default function Preview({ children }: { children: React.ReactNode }) {
           size="lg"
           onClick={() => {
             nprogress.complete()
-            scrollTo({ y: 0 })
             router.push('/on-boarding/complete')
           }}
         >
