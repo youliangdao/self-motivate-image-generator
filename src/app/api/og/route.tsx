@@ -224,7 +224,12 @@ export async function GET(request: Request) {
                 </span>
                 <div tw="flex text-white text-5xl w-full items-center mt-10">
                   <div tw="flex flex-col">
-                    <div tw="flex ml-10">
+                    <div
+                      tw="flex ml-10"
+                      style={{
+                        fontWeight: 'bold',
+                      }}
+                    >
                       {`${month} / ${day}`}
                       <span tw="text-3xl mt-3">{`(${dayOfWeekStr})`}</span>
                     </div>
