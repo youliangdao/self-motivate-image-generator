@@ -6,6 +6,7 @@ import { useLocalStorage } from '@mantine/hooks'
 
 import { Genre } from '@/app/on-boarding/select-type/page'
 import { FormType } from '@/components/Form/schema'
+import { baseURL } from '@/constants/env'
 
 import Preview from './_components/Preview'
 
@@ -46,7 +47,7 @@ export default function Page() {
       </div>
       {genreLocalData && templateLocalData && formLocalData && (
         <Image
-          src={`http://localhost:3000/api/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+          src={`${baseURL}/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
           alt="preview"
         />
       )}
