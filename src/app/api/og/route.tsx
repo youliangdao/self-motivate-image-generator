@@ -10,7 +10,7 @@ import { initialGenreData } from '@/constants/initialGenreData'
 export const runtime = 'edge'
 
 const font = fetch(
-  new URL('/src/app/assets/MPLUS1p-Bold.ttf', import.meta.url),
+  new URL('/src/app/assets/MPLUS1p-Bold', import.meta.url),
 ).then((res) => res.arrayBuffer())
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -314,6 +314,56 @@ export async function GET(request: Request) {
           </div>
         </div>
       ) : templateId === '5' ? (
+        // オフライン開催のテンプレート
+        <div
+          style={{
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundImage: `url(${`data:image/svg+xml,${encodeURIComponent(
+              '<svg id="visual" viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><defs><filter id="blur1" x="-10%" y="-10%" width="120%" height="120%"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur stdDeviation="201" result="effect1_foregroundBlur"></feGaussianBlur></filter></defs><rect width="1200" height="630" fill="#6600FF"></rect><g filter="url(#blur1)"><circle cx="111" cy="236" fill="#00CC99" r="447"></circle><circle cx="1150" cy="596" fill="#6600FF" r="447"></circle><circle cx="1104" cy="241" fill="#00CC99" r="447"></circle><circle cx="332" cy="621" fill="#00CC99" r="447"></circle><circle cx="1113" cy="17" fill="#6600FF" r="447"></circle><circle cx="305" cy="358" fill="#00CC99" r="447"></circle></g></svg>',
+            )}`})`,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            fontFamily: 'Noto Sans JP, "sans-serif"',
+          }}
+        >
+          <div tw="flex flex-col px-4 items-center">
+            <div tw="flex flex-col text-3xl font-bold bg-white items-center px-15 py-10">
+              <span tw="text-3xl bg-gray-800 text-white font-bold p-3">
+                オフライン開催！！
+              </span>
+              <div tw="flex flex-col items-center mt-5">
+                <div tw="text-4xl border-black border-t-2 py-3 border-b-2 max-w-full w-full mb-2">
+                  {description}
+                </div>
+                <span tw="text-6xl leading-tight mt-5">{title}</span>
+              </div>
+              <span tw="text-3xl leading-tight font-normal bg-indigo-200 mt-5">
+                当日のご参加お待ちしています♪
+              </span>
+            </div>
+            <div tw="flex w-full items-center font-bold mt-5">
+              <div tw="flex ml-10 text-6xl">
+                {' '}
+                {`${month} / ${day}`} {`(${dayOfWeekStr})`}
+              </div>
+              <div tw="flex flex-col text-5xl ml-10">
+                <span tw="text-6xl">{`${startTime} ~ ${endTime}`}</span>
+              </div>
+            </div>
+            <span tw="text-3xl mt-5">
+              ※当日の状況により変更となる可能性があります
+            </span>
+          </div>
+        </div>
+      ) : templateId === '6' ? (
         // 黄色いテンプレート
         <div
           style={{
