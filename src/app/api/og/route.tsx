@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ImageResponse } from 'next/server'
@@ -107,7 +108,7 @@ export async function GET(request: Request) {
                   alt="画像"
                   width="400"
                   height="400"
-                  fit="content"
+                  style={{ objectFit: 'contain' }}
                 />
               </div>
             </div>
@@ -176,7 +177,7 @@ export async function GET(request: Request) {
                     alt=""
                     width="400"
                     height="400"
-                    fit="content"
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
               </div>
@@ -243,7 +244,7 @@ export async function GET(request: Request) {
                     alt="画像"
                     width="400"
                     height="400"
-                    fit="content"
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
                 <div tw="flex flex-col border border-white p-3 ml-50 mt-10 items-center">
@@ -305,7 +306,7 @@ export async function GET(request: Request) {
                     alt=""
                     width="400"
                     height="400"
-                    fit="content"
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
               </div>
@@ -391,7 +392,7 @@ export async function GET(request: Request) {
                   alt="画像"
                   width="400"
                   height="400"
-                  fit="content"
+                  style={{ objectFit: 'contain' }}
                 />
               </div>
               <div tw="flex flex-col text-3xl font-bold mt-0 max-w-7/12 items-center">
