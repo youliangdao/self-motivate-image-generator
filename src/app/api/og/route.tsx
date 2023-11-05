@@ -10,7 +10,7 @@ import { initialGenreData } from '@/constants/initialGenreData'
 export const runtime = 'edge'
 
 const font = fetch(
-  new URL('/src/app/assets/MPLUS1p-Bold.ttf', import.meta.url),
+  new URL('/src/app/assets/NotoSansJP.ttf', import.meta.url),
 ).then((res) => res.arrayBuffer())
 
 // eslint-disable-next-line @typescript-eslint/require-await
