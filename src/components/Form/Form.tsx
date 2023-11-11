@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, FileInput, Group, Space } from '@mantine/core'
+import { Box, Button, Group, Space } from '@mantine/core'
 import { nprogress } from '@mantine/nprogress'
 import { useRouter } from 'next/navigation'
 import { Form as $Form, useFormContext } from 'react-hook-form'
@@ -66,14 +66,6 @@ export function Form({ handleClick }: { handleClick: () => void }) {
             className="flex-1"
           />
         </Group>
-        <Space h={20} />
-
-        <FileInput
-          size="lg"
-          label="添付したい画像"
-          description="アップロードしない場合は、デフォルトの画像が表示されます"
-          placeholder="Upload files"
-        />
       </Box>
       <Group justify="center" className="mt-10">
         <Button

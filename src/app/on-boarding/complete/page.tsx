@@ -55,7 +55,17 @@ export default function Complete() {
       </div>
       <Stack align="center">
         <TwitterShareButton
-          url={`https://semipos.vercel.app?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+          url={`https://semipos.vercel.app?title=${encodeURIComponent(
+            formLocalData.title,
+          )}&description=${encodeURIComponent(
+            formLocalData.description || '',
+          )}&date=${formLocalData.date}&startTime=${encodeURIComponent(
+            formLocalData.startTime,
+          )}&endTime=${encodeURIComponent(
+            formLocalData.endTime,
+          )}&genre=${encodeURIComponent(
+            genreLocalData,
+          )}&templateId=${templateLocalData}`}
         />
         <CopyButton
           value={`${baseURL}/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
