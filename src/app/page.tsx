@@ -39,7 +39,9 @@ export default function Home() {
 
             <Container size={640}>
               <Text size="lg" className={classes.description}>
-                何でもない予定をそれっぽく見せれるアプリ「セミLife」
+                何でもない予定をそれっぽく見せれるアプリ
+                <br />
+                「Seminar Poster Generator」
               </Text>
             </Container>
 
