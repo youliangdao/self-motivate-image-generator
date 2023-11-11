@@ -16,7 +16,7 @@ export function generateMetadata({ params, searchParams }: Props): Metadata {
   // ?description=<description>
   const description = searchParams?.description
     ? searchParams.description
-    : 'セミナー登壇者っぽく、ただの個人的な予定を告知してみませんか？'
+    : 'セミナー登壇者みたいに個人的な予定を告知してみませんか？'
   // ?date=<date>
   const date = searchParams?.date ? searchParams.date : ''
   // ?startTime=<startTime>
@@ -32,17 +32,17 @@ export function generateMetadata({ params, searchParams }: Props): Metadata {
   return {
     metadataBase: new URL('https://semipos.vercel.app/'),
     title: 'Seminar Post Generator',
-    description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+    description: 'セミナー登壇者っぽく、個人的な予定を告知できるアプリ',
     openGraph: {
       title: 'Seminar Post Generator',
-      description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+      description: 'セミナー登壇者っぽく、個人的な予定を告知できるアプリ',
       images: [
         `${baseURL}/og?title=${title}&description=${description}&date=${date}&startTime=${startTime}&endTime=${endTime}&genre=${genre}&templateId=${templateId}`,
       ],
     },
     twitter: {
       title: 'Seminar Post Generator',
-      description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+      description: 'セミナー登壇者っぽく、個人的な予定を告知できるアプリ',
       card: 'summary_large_image',
       images: [
         `${baseURL}/og?title=${title}&description=${description}&date=${date}&startTime=${startTime}&endTime=${endTime}&genre=${genre}&templateId=${templateId}`,
