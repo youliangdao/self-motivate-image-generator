@@ -92,12 +92,19 @@ export async function GET(request: Request) {
                 <div tw="flex text-7xl mt-5 text-white w-full items-center">
                   <div tw="flex flex-col mt-10">
                     <div tw="flex ml-10 text-7xl">
-                      {`${month}.${day}`}
+                      {!Number.isNaN(month) &&
+                        !Number.isNaN(day) &&
+                        dayOfWeekStr !== undefined &&
+                        `${month}.${day}`}
                       <span tw="text-4xl mt-8">{`(${dayOfWeekStr})`}</span>
                     </div>
                   </div>
                   <div tw="flex flex-col text-5xl ml-15 mt-12">
-                    <span tw="text-4xl">{`${startTime} 〜 ${endTime}`}</span>
+                    <span tw="text-4xl">
+                      {startTime !== '' &&
+                        endTime !== '' &&
+                        `${startTime} 〜 ${endTime}`}
+                    </span>
                     <span tw="text-3xl mt-3">※途中参加・退出OK</span>
                   </div>
                 </div>

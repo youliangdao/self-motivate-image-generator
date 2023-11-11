@@ -9,8 +9,6 @@ type Props = {
 }
 
 export function generateMetadata({ params, searchParams }: Props): Metadata {
-  console.log(searchParams)
-
   // ?title=<title>
   const title = searchParams?.title
     ? searchParams.title
