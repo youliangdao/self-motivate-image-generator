@@ -1,79 +1,63 @@
-'use client'
+import { Metadata } from 'next'
 
-import { Button, Container, Overlay, Text, Title } from '@mantine/core'
-import { nprogress } from '@mantine/nprogress'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { FooterSocial, Header, HeroContents } from '@/components'
+import { baseURL } from '@/constants/env'
 
-import {
-  CardsCarousel,
-  FooterSocial,
-  Header,
-  HeroLeftBullets,
-  HeroRightBullets,
-} from '@/components'
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | undefined }
+}
 
-import classes from './home.module.css'
+export function generateMetadata({ params, searchParams }: Props): Metadata {
+  console.log(searchParams)
+
+  // ?title=<title>
+  const title = searchParams?.title
+    ? searchParams.title
+    : 'Seminar Post Generator'
+  // ?description=<description>
+  const description = searchParams?.description
+    ? searchParams.description
+    : 'セミナー登壇者っぽく、ただの個人的な予定を告知してみませんか？'
+  // ?date=<date>
+  const date = searchParams?.date ? searchParams.date : ''
+  // ?startTime=<startTime>
+  const startTime = searchParams?.startTime ? searchParams.startTime : ''
+  // ?endTime=<endTime>
+  const endTime = searchParams?.endTime ? searchParams.endTime : ''
+
+  // ?genre=<genre>
+  const genre = searchParams?.genre ? searchParams.genre : 'other'
+
+  // ?templateId=<templateId>
+  const templateId = searchParams?.templateId ? searchParams.templateId : '1'
+  return {
+    metadataBase: new URL('https://semipos.vercel.app/'),
+    title: 'Seminar Post Generator',
+    description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+    openGraph: {
+      title: 'Seminar Post Generator',
+      description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+      images: [
+        `${baseURL}/og?title=${title}&description=${description}&date=${date}&startTime=${startTime}&endTime=${endTime}&genre=${genre}&templateId=${templateId}`,
+      ],
+    },
+    twitter: {
+      title: 'Seminar Post Generator',
+      description: 'セミナー登壇者っぽく、ただの個人的な予定を告知できるアプリ',
+      card: 'summary_large_image',
+      images: [
+        `${baseURL}/og?title=${title}&description=${description}&date=${date}&startTime=${startTime}&endTime=${endTime}&genre=${genre}&templateId=${templateId}`,
+      ],
+    },
+  }
+}
 
 export default function Home() {
-  const router = useRouter()
-
-  useEffect(() => {
-    nprogress.reset()
-  }, [])
   return (
     <>
       <Header />
-      <main className="bg-slate-100">
-        <div className={classes.wrapper}>
-          <Overlay
-            gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
-            opacity={1}
-            zIndex={1}
-          />
-
-          <div className={classes.inner}>
-            <Title className={classes.title}>
-              セミナー登壇者っぽく、ただの個人的な予定を告知してみませんか？
-            </Title>
-
-            <Container size={640}>
-              <Text size="lg" className={classes.description}>
-                何でもない予定をそれっぽく見せれるアプリ
-                <br />
-                「Seminar Poster Generator」
-              </Text>
-            </Container>
-
-            <div className={classes.controls}>
-              <Button
-                className={classes.control}
-                onClick={() => {
-                  nprogress.set(20)
-                  router.push('/on-boarding/select-type')
-                }}
-                variant="white"
-                size="lg"
-              >
-                今すぐ使ってみる
-              </Button>
-            </div>
-          </div>
-        </div>
-        <section>
-          <div className="relative xs:px-10 md:px-20">
-            <Title className={classes.contentTitle}>
-              テンプレートを使ってアイキャッチ画像を作成しましょう
-            </Title>
-            <CardsCarousel />
-          </div>
-        </section>
-        <section>
-          <HeroRightBullets />
-          <HeroLeftBullets />
-          <HeroRightBullets />
-        </section>
-      </main>
+      <HeroContents />
       <FooterSocial />
     </>
   )
