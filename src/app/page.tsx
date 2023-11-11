@@ -14,9 +14,13 @@ export function generateMetadata({ params, searchParams }: Props): Metadata {
     ? searchParams.title
     : 'Seminar Post Generator'
   // ?description=<description>
-  const description = searchParams
-    ? searchParams?.description
-    : 'セミナー登壇者みたいに個人的な予定を告知してみませんか？'
+  let description =
+    'セミナー登壇者みたいに個人的な予定を告知してみませんか？' as
+      | string
+      | undefined
+  if ('description' in searchParams) {
+    description = searchParams.description
+  }
   // ?date=<date>
   const date = searchParams?.date ? searchParams.date : ''
   // ?startTime=<startTime>
