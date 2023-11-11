@@ -94,9 +94,10 @@ export async function GET(request: Request) {
                     <div tw="flex ml-10 text-7xl">
                       {!Number.isNaN(month) &&
                         !Number.isNaN(day) &&
-                        dayOfWeekStr !== undefined &&
                         `${month}.${day}`}
-                      <span tw="text-4xl mt-8">{`(${dayOfWeekStr})`}</span>
+                      <span tw="text-4xl mt-8">
+                        {dayOfWeekStr !== undefined && `(${dayOfWeekStr})`}
+                      </span>
                     </div>
                   </div>
                   <div tw="flex flex-col text-5xl ml-15 mt-12">

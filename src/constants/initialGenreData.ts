@@ -125,6 +125,6 @@ export const initialGenreData: GenreData = [
     isSelected: false,
     image: other.src,
     ogpImage:
-      'https://youliangdao.s3.ap-northeast-1.amazonaws.com/setsumeikai_seminar.png',
+      'https://youliangdao.s3.ap-northeast-1.amazonaws.com/17412_color.png',
   },
 ]
