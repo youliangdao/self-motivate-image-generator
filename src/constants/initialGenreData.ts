@@ -29,7 +29,7 @@ export const initialGenreData: GenreData = [
     image: hobby.src,
     isSelected: false,
     ogpImage:
-      'https://youliangdao.s3.ap-northeast-1.amazonaws.com/hobby_image.png',
+      'https://youliangdao.s3.ap-northeast-1.amazonaws.com/tasyumi_kiyoubinbou.png',
   },
   {
     name: '自然',
