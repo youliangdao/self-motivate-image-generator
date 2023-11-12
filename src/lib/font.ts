@@ -13,30 +13,30 @@ export async function loadGoogleFont({
   weight,
   text,
 }: {
-  family: string;
-  weight?: number;
-  text?: string;
+  family: string
+  weight?: number
+  text?: string
 }) {
   const params = new URLSearchParams({
     family: `${family}${weight ? `:wght@${weight}` : ''}`,
-  });
+  })
   if (text) {
-    params.append('text', text);
+    params.append('text', text)
   } else {
-    params.append('subset', 'latin');
+    params.append('subset', 'latin')
   }
 
-  const url = `https://fonts.googleapis.com/css2?${params.toString()}`;
+  const url = `https://fonts.googleapis.com/css2?${params.toString()}`
 
-  const css = await fetch(url).then((res) => res.text());
+  const css = await fetch(url).then((res) => res.text())
 
   const fontUrl = css.match(
-    /src: url\((.+)\) format\('(opentype|truetype)'\)/
-  )?.[1];
+    /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+  )?.[1]
 
   if (!fontUrl) {
-    throw new Error('Font file not found in CSS fetched from Google Fonts');
+    throw new Error('Font file not found in CSS fetched from Google Fonts')
   }
 
-  return fetch(fontUrl).then((res) => res.arrayBuffer());
+  return fetch(fontUrl).then((res) => res.arrayBuffer())
 }
