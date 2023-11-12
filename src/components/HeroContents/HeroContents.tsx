@@ -1,18 +1,42 @@
 'use client'
 
 import { Button, Container, Overlay, Text, Title } from '@mantine/core'
+import { useLocalStorage } from '@mantine/hooks'
 import { nprogress } from '@mantine/nprogress'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
+import { Genre } from '@/app/on-boarding/select-type/page'
 import { CardsCarousel, HeroLeftBullets, HeroRightBullets } from '@/components'
 
+import { FormType } from '../Form/schema'
 import { HeroRightLast } from '../HeroRightLast'
 import classes from './heroContents.module.css'
 
 export function HeroContents() {
   const router = useRouter()
+
+  const [genreLocalData, setGenreLocalData] = useLocalStorage<Genre>({
+    key: 'genre',
+    defaultValue: '',
+  })
+
+  const [templateLocalData, setTemplateLocalData] = useLocalStorage<number>({
+    key: 'templateId',
+    defaultValue: 0,
+  })
+
+  const [formLocalData, setFormLocalData] = useLocalStorage<FormType>({
+    key: 'form',
+    defaultValue: {
+      title: '',
+      date: null,
+      description: '',
+      startTime: '',
+      endTime: '',
+    },
+  })
 
   useEffect(() => {
     nprogress.reset()
@@ -44,6 +68,15 @@ export function HeroContents() {
               className={classes.control}
               onClick={() => {
                 nprogress.set(20)
+                setGenreLocalData('')
+                setTemplateLocalData(0)
+                setFormLocalData({
+                  title: '',
+                  date: null,
+                  description: '',
+                  startTime: '',
+                  endTime: '',
+                })
                 router.push('/on-boarding/select-type')
               }}
               variant="white"
