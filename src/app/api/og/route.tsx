@@ -4,19 +4,19 @@
 import { ImageResponse } from 'next/server'
 
 import { initialGenreData } from '@/constants/initialGenreData'
+import { loadGoogleFont } from '@/lib/font'
 // App router includes @vercel/og.
 // No need to install it.
 
 export const runtime = 'edge'
 
-const font = fetch(
-  new URL('/src/app/assets/NotoSansJP.ttf', import.meta.url),
-).then((res) => res.arrayBuffer())
-
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function GET(request: Request) {
   try {
-    const fontData = await font
+    const notoSansArrayBuffer = await loadGoogleFont({
+      family: 'Noto Sans JP',
+      weight: 700,
+    })
     const { searchParams } = new URL(request.url)
     // ?title=<title>
     const hasTitle = searchParams.has('title')
@@ -301,7 +301,7 @@ export async function GET(request: Request) {
                   <div tw="flex flex-col mt-10">
                     <div tw="flex">
                       <span tw="text-7xl">{`${month}.${day}`}</span>
-                      <span tw="text-4xl mt-6">({`${dayOfWeekStr}`})</span>
+                      <span tw="text-4xl mt-8">({`${dayOfWeekStr}`})</span>
                     </div>
                     <span tw="text-4xl">{`${startTime} ~ ${endTime}`}</span>
                   </div>
@@ -440,8 +440,9 @@ export async function GET(request: Request) {
         fonts: [
           {
             name: 'NotoSansJP',
-            data: fontData,
+            data: notoSansArrayBuffer,
             style: 'normal',
+            weight: 700,
           },
         ],
       },
