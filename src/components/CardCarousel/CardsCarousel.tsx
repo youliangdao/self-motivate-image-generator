@@ -4,6 +4,13 @@ import { Carousel } from '@mantine/carousel'
 import { Image, rem, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
+import carousel1 from '/public/carousel1.svg'
+import carousel2 from '/public/carousel2.svg'
+import carousel3 from '/public/carousel3.svg'
+import carousel4 from '/public/carousel4.svg'
+import carousel5 from '/public/carousel5.svg'
+import carousel6 from '/public/carousel6.svg'
+
 import classes from './CardsCarousel.module.css'
 
 interface CardProps {
@@ -16,22 +23,22 @@ function Card({ image }: CardProps) {
 
 const data = [
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel1.src,
   },
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel6.src,
   },
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel3.src,
   },
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel4.src,
   },
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel5.src,
   },
   {
-    image: 'https://youliangdao.s3.ap-northeast-1.amazonaws.com/%E3%80%8C.png',
+    image: carousel2.src,
   },
 ]
 
@@ -45,7 +52,7 @@ export function CardsCarousel() {
   ))
 
   return (
-    <div className="px-14">
+    <div className="px-8 xs:px-14">
       <Carousel
         slideSize={{ base: '100%', sm: '50%' }}
         slideGap={{ base: rem(2), sm: 'xl' }}

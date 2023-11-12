@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 
+import Favicon from '/public/logo.png';
 import { FooterSocial, Header, HeroContents } from '@/components'
 import { baseURL } from '@/constants/env'
 
@@ -37,6 +38,7 @@ export function generateMetadata({ params, searchParams }: Props): Metadata {
     metadataBase: new URL('https://semipos.vercel.app/'),
     title: 'Seminar Post Generator',
     description: 'セミナー登壇者っぽく、個人的な予定を告知できるアプリ',
+    icons: [{rel: 'icon', url: Favicon.src}],
     openGraph: {
       title: 'Seminar Post Generator',
       description: 'セミナー登壇者っぽく、個人的な予定を告知できるアプリ',

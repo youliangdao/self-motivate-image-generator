@@ -1,0 +1,1 @@
+export { HeroRightLast } from './HeroRightLast'

@@ -1,8 +1,9 @@
 'use client'
 
-import { Container } from '@mantine/core'
-import { MantineLogo } from '@mantine/ds'
+import { Container, Image } from '@mantine/core'
 import Link from 'next/link'
+
+import logo from '/public/logo2.png'
 
 import classes from './FooterSocial.module.css'
 
@@ -11,7 +12,13 @@ export function FooterSocial() {
     <div className={classes.footer}>
       <Container className={classes.inner}>
         <Link href="/">
-          <MantineLogo size={28} />
+          <Image
+            src={logo.src}
+            alt="logo"
+            height={84}
+            width="auto"
+            fit="contain"
+          />
         </Link>
       </Container>
     </div>

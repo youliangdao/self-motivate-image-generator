@@ -2,11 +2,13 @@
 
 import { Button, Container, Overlay, Text, Title } from '@mantine/core'
 import { nprogress } from '@mantine/nprogress'
+import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { CardsCarousel, HeroLeftBullets, HeroRightBullets } from '@/components'
 
+import { HeroRightLast } from '../HeroRightLast'
 import classes from './heroContents.module.css'
 
 export function HeroContents() {
@@ -25,17 +27,17 @@ export function HeroContents() {
         />
 
         <div className={classes.inner}>
-          <Title className={classes.title}>
-            セミナー登壇者っぽく、ただの個人的な予定を告知してみませんか？
-          </Title>
-
           <Container size={640}>
-            <Text size="lg" className={classes.description}>
-              何でもない予定をそれっぽく見せれるアプリ
-              <br />
-              「Seminar Poster Generator」
+            <Text size="lg" className={clsx(classes.description, 'mb-5')}>
+              <span className="text-gray-300">
+                セミナー登壇者っぽく、ただの個人的な予定を告知してみませんか？
+              </span>
             </Text>
           </Container>
+          <Title className={classes.title}>
+            何でもない予定を告知できるアプリ
+            <br /> 「Seminar Post Generator」
+          </Title>
 
           <div className={classes.controls}>
             <Button
@@ -63,7 +65,7 @@ export function HeroContents() {
       <section>
         <HeroRightBullets />
         <HeroLeftBullets />
-        <HeroRightBullets />
+        <HeroRightLast />
       </section>
     </main>
   )
