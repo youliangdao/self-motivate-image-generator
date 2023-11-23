@@ -7,6 +7,7 @@ import { useLocalStorage } from '@mantine/hooks'
 import { Genre } from '@/app/on-boarding/select-type/page'
 import { FormType } from '@/components/Form/schema'
 import { baseURL } from '@/constants/env'
+import { formatter } from '@/utils/formatter'
 
 import Preview from './_components/Preview'
 
@@ -51,9 +52,7 @@ export default function Page() {
             formLocalData.description
           }&date=${
             formLocalData?.date
-              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
-                  timeZone: 'Asia/Tokyo',
-                })
+              ? formatter.format(new Date(formLocalData.date))
               : ''
           }&startTime=${formLocalData.startTime}&endTime=${
             formLocalData.endTime

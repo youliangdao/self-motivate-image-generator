@@ -8,6 +8,7 @@ import Confetti from 'react-confetti'
 import image from '/public/seminar.png'
 import { FormType } from '@/components/Form/schema'
 import { baseURL } from '@/constants/env'
+import { formatter } from '@/utils/formatter'
 
 import { Genre } from '../select-type/page'
 import { TwitterShareButton } from './_components/TwitterShareButton'
@@ -61,9 +62,7 @@ export default function Complete() {
             formLocalData.description || '',
           )}&date=${
             formLocalData?.date
-              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
-                  timeZone: 'Asia/Tokyo',
-                })
+              ? formatter.format(new Date(formLocalData.date))
               : ''
           }&startTime=${encodeURIComponent(
             formLocalData.startTime,
@@ -78,9 +77,7 @@ export default function Complete() {
             formLocalData.description
           }&date=${
             formLocalData?.date
-              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
-                  timeZone: 'Asia/Tokyo',
-                })
+              ? formatter.format(new Date(formLocalData.date))
               : ''
           }&startTime=${formLocalData.startTime}&endTime=${
             formLocalData.endTime
