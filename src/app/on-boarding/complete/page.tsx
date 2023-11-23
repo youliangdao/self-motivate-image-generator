@@ -59,7 +59,13 @@ export default function Complete() {
             formLocalData.title,
           )}&description=${encodeURIComponent(
             formLocalData.description || '',
-          )}&date=${formLocalData.date}&startTime=${encodeURIComponent(
+          )}&date=${
+            formLocalData?.date
+              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
+                  timeZone: 'Asia/Tokyo',
+                })
+              : ''
+          }&startTime=${encodeURIComponent(
             formLocalData.startTime,
           )}&endTime=${encodeURIComponent(
             formLocalData.endTime,
@@ -68,7 +74,17 @@ export default function Complete() {
           )}&templateId=${templateLocalData}`}
         />
         <CopyButton
-          value={`${baseURL}/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+          value={`${baseURL}/og?title=${formLocalData.title}&description=${
+            formLocalData.description
+          }&date=${
+            formLocalData?.date
+              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
+                  timeZone: 'Asia/Tokyo',
+                })
+              : ''
+          }&startTime=${formLocalData.startTime}&endTime=${
+            formLocalData.endTime
+          }&genre=${genreLocalData}&templateId=${templateLocalData}`}
         >
           {({ copied, copy }) => (
             <Button

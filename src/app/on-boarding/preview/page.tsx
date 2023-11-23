@@ -47,7 +47,17 @@ export default function Page() {
       </div>
       {genreLocalData && templateLocalData && formLocalData && (
         <Image
-          src={`${baseURL}/og?title=${formLocalData.title}&description=${formLocalData.description}&date=${formLocalData.date}&startTime=${formLocalData.startTime}&endTime=${formLocalData.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+          src={`${baseURL}/og?title=${formLocalData.title}&description=${
+            formLocalData.description
+          }&date=${
+            formLocalData?.date
+              ? new Date(formLocalData.date).toLocaleString('ja-JP', {
+                  timeZone: 'Asia/Tokyo',
+                })
+              : ''
+          }&startTime=${formLocalData.startTime}&endTime=${
+            formLocalData.endTime
+          }&genre=${genreLocalData}&templateId=${templateLocalData}`}
           alt="preview"
         />
       )}

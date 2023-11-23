@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       ? searchParams.get('description')?.slice(0, 100)
       : ''
     // ?date=<date>
-    const hasDate = searchParams.has('description')
+    const hasDate = searchParams.has('date')
     const date = hasDate ? searchParams.get('date')?.slice(0, 100) : ''
     const month = new Date(date ?? '').getMonth() + 1
     const day = new Date(date ?? '').getDate()

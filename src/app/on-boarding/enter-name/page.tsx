@@ -51,7 +51,7 @@ export default function EnterName() {
     if (formLocalData) {
       form.reset({
         title: formLocalData.title,
-        date: new Date(),
+        date: formLocalData?.date ? new Date(formLocalData.date) : new Date(),
         description: formLocalData.description,
         startTime: formLocalData.startTime,
         endTime: formLocalData.endTime,
