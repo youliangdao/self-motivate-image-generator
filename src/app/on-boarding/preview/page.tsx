@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 'use client'
 
-import { Image, Space, Text, Title } from '@mantine/core'
+import { Container, Image, Space, Text, Title } from '@mantine/core'
 import { useLocalStorage } from '@mantine/hooks'
+import { useState } from 'react'
+import { ClockLoader } from 'react-spinners'
 
 import { Genre } from '@/app/on-boarding/select-type/page'
 import { FormType } from '@/components/Form/schema'
-import { baseURL } from '@/constants/env'
 import { formatter } from '@/utils/formatter'
 
 import Preview from './_components/Preview'
@@ -32,6 +33,7 @@ export default function Page() {
       endTime: '',
     },
   })
+  const [loaded, setLoaded] = useState(false)
 
   return (
     <Preview>
@@ -46,19 +48,21 @@ export default function Page() {
           修正したい箇所があれば、前のステップに戻って修正しましょう
         </Text>
       </div>
-      {genreLocalData && templateLocalData && formLocalData && (
-        <Image
-          src={`${baseURL}/og?title=${formLocalData.title}&description=${
-            formLocalData.description
-          }&date=${
-            formLocalData?.date
-              ? formatter.format(new Date(formLocalData.date))
-              : ''
-          }&startTime=${formLocalData.startTime}&endTime=${
-            formLocalData.endTime
-          }&genre=${genreLocalData}&templateId=${templateLocalData}`}
-          alt="preview"
-        />
+
+      <Image
+        className={`${!loaded ? 'opacity-0' : 'opacity-100'}}`}
+        onLoad={() => setLoaded(true)}
+        src={`https://semipos.vercel.app/api/og?title=${formLocalData?.title}&description=${formLocalData?.description}&date=${
+          formLocalData?.date
+            ? formatter.format(new Date(formLocalData.date))
+            : ''
+        }&startTime=${formLocalData?.startTime}&endTime=${formLocalData?.endTime}&genre=${genreLocalData}&templateId=${templateLocalData}`}
+        alt="preview"
+      />
+      {!loaded && (
+        <Container className="flex h-[500px] items-center justify-center">
+          <ClockLoader color="#228be6" />
+        </Container>
       )}
     </Preview>
   )

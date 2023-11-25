@@ -1,4 +1,5 @@
-import { Card, Image } from '@mantine/core'
+import { Card, Image, Skeleton } from '@mantine/core'
+import { useState } from 'react'
 
 import { cn } from '@/utils/twMerge'
 
@@ -11,6 +12,7 @@ export function TemplateCard({
   isSelected: boolean
   onClick?: () => void
 }) {
+  const [loaded, setLoaded] = useState(false)
   return (
     <Card
       withBorder
@@ -22,7 +24,14 @@ export function TemplateCard({
       onClick={onClick}
     >
       <Card.Section>
-        <Image src={image} width={400} fit="cover" alt="画像" />
+        <Image
+          src={image}
+          width={400}
+          fit="cover"
+          alt="画像"
+          onLoad={() => setLoaded(true)}
+        />
+        {!loaded && <Skeleton height={200} />}
       </Card.Section>
     </Card>
   )

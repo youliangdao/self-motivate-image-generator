@@ -19,6 +19,7 @@ export type Template = {
 
 export default function PickTemplate() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
   const [templateLocalData, setTemplateLocalData] = useLocalStorage<number>({
     key: 'templateId',
     defaultValue: 0,
