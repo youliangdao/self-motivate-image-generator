@@ -13,7 +13,7 @@ export function Header() {
           <Image
             src={logo.src}
             alt="logo"
-            height={84}
+            height={80}
             width="auto"
             fit="contain"
           />
