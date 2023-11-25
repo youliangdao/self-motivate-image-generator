@@ -1,5 +1,7 @@
 'use client'
 
+import 'dayjs/locale/ja'
+
 import { Box, Button, Group, Space } from '@mantine/core'
 import { nprogress } from '@mantine/nprogress'
 import { useRouter } from 'next/navigation'
@@ -38,6 +40,11 @@ export function Form({ handleClick }: { handleClick: () => void }) {
         />
         <Space h={20} />
         <DateInput
+          placeholder="日付を選択"
+          clearable
+          firstDayOfWeek={0}
+          valueFormat="YYYY/MM/DD"
+          locale="ja"
           name="date"
           control={control}
           size="lg"

@@ -90,6 +90,7 @@ export default function PickTemplate() {
         </Button>
         <Button
           size="lg"
+          disabled={templateLocalData === 0}
           onClick={() => {
             nprogress.set(60)
             router.push('/on-boarding/enter-name')

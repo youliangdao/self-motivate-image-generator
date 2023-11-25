@@ -41,6 +41,9 @@ dependencies:
   '@vercel/og':
     specifier: ^0.5.17
     version: 0.5.17
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   next:
     specifier: 13.5.4
     version: 13.5.4(react-dom@18.2.0)(react@18.2.0)
